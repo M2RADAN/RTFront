@@ -16,7 +16,7 @@ export const Register: FC = () => {
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    dispatch(registerUser(values)).then((res) => {
+    dispatch(registerUser(values)).then(() => {
       navigate("/login");
     });
   }

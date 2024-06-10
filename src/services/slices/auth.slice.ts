@@ -1,4 +1,4 @@
-import { createSlice, isPending, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { registerUser } from "../thunk/register";
 import { loginUser } from "../thunk/login";
 

@@ -1,9 +1,12 @@
-import { FC, PropsWithChildren } from "react";
-
+import { FC, PropsWithChildren, useEffect } from "react";
+import "./AuthLayout.css";
+import { useAppDispatch } from "../services";
 export const AuthLayout: FC<PropsWithChildren> = ({ children }) => {
-  // TODO get user ifno
+  const dispatch = useAppDispatch();
 
-  // if (not auth) redirect
-  // if (auth)
+  useEffect(() => {
+    // dispatch(me);
+  }, []);
+
   return <>{children}</>;
 };
