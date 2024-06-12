@@ -1,6 +1,12 @@
-import { MouseEvent, useState } from "react";
+import {
+  MouseEvent,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 
-import "./header.css";
+import "./Header.css";
 import { Pencil } from "lucide-react";
 import { Outlet } from "react-router-dom";
 
@@ -11,17 +17,24 @@ import { useAppSelector } from "../../services";
 
 const Header = () => {
   const [style, setStyle] = useState<React.CSSProperties>({});
-  const isAuth = useAppSelector((s) => s.auth.isAuth);
+  const isAuth = useAppSelector((s) => s.profile.isAuth);
+  const active = useAppSelector((store) => store.navigation.active);
 
-  function openOutlet(event: MouseEvent<HTMLAnchorElement>) {
-    const anchor = (event.target as HTMLElement).closest("a");
+  function openOutlet(el: HTMLElement) {
+    const anchor = el;
     const top = (anchor?.offsetTop || 0) + 70;
-    const left = (anchor?.offsetLeft || 0) + 10;
-
+    const left = (anchor?.offsetLeft || 0) + 36;
     setStyle({ transform: `translate(${left}px, ${top}px)` });
   }
 
-  const linkProps = { onClick: openOutlet, activeClassName: "header__link" };
+  useEffect(() => {
+    const el = document.querySelector(`[data-action="${active}"]`);
+    if (active && el) {
+      openOutlet(el as HTMLElement);
+    }
+  }, [active, isAuth]);
+
+  const linkProps = { activeClassName: "header__link" };
   return (
     <div className="Header">
       <HeaderLink route={NAVIGATIONS.EDIT} {...linkProps}>

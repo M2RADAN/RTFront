@@ -1,0 +1,13 @@
+form.form a {
+  background-color: #fff;
+  width: calc(100% - 30px);
+  padding: 0 15px 0 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.2s ease;
+}
+
+form.a.form__link {
+  background-color: #ff0f;
+}

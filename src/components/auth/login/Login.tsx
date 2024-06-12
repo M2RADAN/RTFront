@@ -2,12 +2,14 @@ import { FC, FormEvent } from "react";
 import { useForm } from "../../../hooks/useForm";
 import { useAppDispatch, useAppSelector } from "../../../services";
 import { loginUser } from "../../../services/thunk/login";
-
+import { NAVIGATIONS } from "../../../const/constants";
+import FormLink from "../../../ui/FormLink";
+import "../AuthForm.css";
 export const Login: FC = () => {
   const [values, onChange] = useForm({ email: "", password: "" });
   const dispatch = useAppDispatch();
-  const isAuth = useAppSelector((store) => store.auth.isAuth);
-  const error = useAppSelector((store) => store.auth.errorMessage);
+  // const isAuth = useAppSelector((store) => store.auth.isAuth);
+  // const error = useAppSelector((store) => store.auth.errorMessage);
   const isPending = useAppSelector((store) => store.auth.isPending);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -20,8 +22,8 @@ export const Login: FC = () => {
 
   return (
     <>
-      {error && <p>{error}</p>}
-      {isAuth ? <p>авторизован</p> : <p>не авторизован</p>}
+      {/* {error && <p>{error}</p>}
+      {isAuth ? <p>авторизован</p> : <p>не авторизован</p>} */}
       <h2>Авторизация</h2>
       <form onSubmit={handleSubmit} className="form">
         <label htmlFor="email">email</label>
@@ -47,6 +49,7 @@ export const Login: FC = () => {
         <button type="submit" disabled={isPending}>
           Логин
         </button>
+        <FormLink route={NAVIGATIONS.REGISTER}>Нет аккаунта</FormLink>
       </form>
     </>
   );
