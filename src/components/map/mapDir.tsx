@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Map, Marker, Control } from "@2gis/mapgl/types";
-import { mapgl } from "@2gis/mapgl";
+import mapgl from  "@2gis/mapgl"
 import { Directions } from "@2gis/mapgl-directions";
-
 interface Props {
   apiKey: string;
   directionsApiKey: string;
