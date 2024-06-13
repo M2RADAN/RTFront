@@ -8,7 +8,7 @@ import { MapWrapper } from "./MapWrapper";
 import { useAppDispatch } from "../../services";
 import { setLnglat } from "../../services/slices/note.slice";
 import { clearLnglat } from "../../services/slices/note.slice";
-
+import { setPoints } from "../../services/slices/note.slice";
 export const MAP_CENTER = [55.31878, 25.23584];
 
 export default function Mapgl() {
@@ -30,7 +30,7 @@ export default function Mapgl() {
       map = new mapgl.Map("map-container", {
         center: MAP_CENTER,
         zoom: 13,
-        key: "916a51a9-06da-48fb-bba4-c9073a4876cc",
+        key: "a16f273e-6e8d-4584-9758-8e57f96503bf",
       });
       const controlsHtml = `<button id="reset">Reset points</button> `;
       new mapgl.Control(map, controlsHtml, {
@@ -76,7 +76,14 @@ export default function Mapgl() {
 
         // If all points are selected — we can draw the route
         if (firstPoint && secondPoint && thirdPoint && directions) {
-          console.log(firstPoint, secondPoint, thirdPoint);
+          const notes = {
+            fPoint: firstPoint,
+            sPoint: secondPoint,
+            tPoint: thirdPoint,
+          };
+          console.log(notes);
+          dispatch(setPoints(notes));
+
           directions.carRoute({
             points: [firstPoint, secondPoint, thirdPoint],
           });
