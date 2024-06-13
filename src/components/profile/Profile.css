@@ -1,0 +1,22 @@
+.card {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	justify-content: center;
+	align-items: center;
+	padding: 15px;
+	width: auto;
+	min-height: 100px;
+	background: #ffff;
+	border-radius: 5px;
+	color: black;
+}
+.profile {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	justify-content: top;
+	align-items: center;
+	height: 584px;
+	width: 386px;
+}
