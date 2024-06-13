@@ -9,10 +9,12 @@ import Edit from "./components/edit/Edit";
 import List from "./components/list/List";
 import { AuthLayout } from "./layouts/AuthLayout";
 import UnAuthLayout from "./layouts/UnAuthLayout";
+import Mapgl from "./components/map/mapComponent";
 
 function App() {
   return (
     <Router>
+      <Mapgl />
       <AuthLayout>
         <Routes>
           <Route path="/" element={<Header />}>
