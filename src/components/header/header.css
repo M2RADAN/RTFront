@@ -1,0 +1,25 @@
+.Header {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 60px;
+  height: 1024px;
+  /* border: 1px solid #ffffff; */
+}
+.Header a {
+  background-color: #fff;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.2s ease;
+}
+
+a.header__link {
+  width: 300px;
+  background-color: #fff;
+}

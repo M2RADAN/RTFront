@@ -1,41 +1,44 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { Login } from "./components/auth/login/LoginComponent";
-import { Register } from "./components/auth/register/RegisterComponent";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Login } from "./components/auth/login/Login";
+import { Register } from "./components/auth/register/Register";
 import "./App.css";
-import Mapgl from "./components/map/mapComponent";
-import { RouteInfoComponent } from "./components/RouteInfo/RouteInfoComponent";
+import Header from "./components/header/Header";
+import Profile from "./components/profile/Profile";
+import Info from "./components/Info/Info";
+import Edit from "./components/edit/Edit";
+import List from "./components/list/List";
+import { AuthLayout } from "./layouts/AuthLayout";
+import UnAuthLayout from "./layouts/UnAuthLayout";
 
 function App() {
   return (
     <Router>
-      <div>
-        {/* <div className="card">
-        <RouteInfoComponent />
-      </div> */}
-        {/* <div className="card">
-        <Mapgl />
-      </div> */}
-        <nav>
-          <div>не зареган</div>
-          <ul>
-            <li>
-              <Link to="/">дефолт</Link>
-            </li>
-            <li>
-              <Link to="/login">Войти</Link>
-            </li>
-            <li>
-              <Link to="/register">Зарегестрироваться</Link>
-            </li>
-          </ul>
-        </nav>
-
+      <AuthLayout>
         <Routes>
-          <Route path="/" element={<Mapgl />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<Header />}>
+            <Route path="profile" element={<Profile />} />
+            <Route
+              path="login"
+              element={
+                <UnAuthLayout>
+                  <Login />
+                </UnAuthLayout>
+              }
+            />
+            <Route
+              path="register"
+              element={
+                <UnAuthLayout>
+                  <Register />
+                </UnAuthLayout>
+              }
+            />
+            <Route path="edit" element={<Edit />} />
+            <Route path="info" element={<Info />} />
+            <Route path="list" element={<List />} />
+          </Route>
         </Routes>
-      </div>
+      </AuthLayout>
     </Router>
   );
 }
