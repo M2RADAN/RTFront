@@ -33,7 +33,7 @@ export const noteSlice = createSlice({
 			store.notes = action.payload;
 		},
 		clearPoints: (store) => {
-			store.lnglat = null;
+			store.notes = null;
 		},
 	},
 });

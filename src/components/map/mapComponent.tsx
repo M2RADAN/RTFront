@@ -47,8 +47,7 @@ export default function Mapgl() {
       const resetButton = document.getElementById("reset");
       const submitButton = document.getElementById("submit");
 
-      if (!resetButton) return;
-      resetButton.addEventListener("click", function () {
+      function reset() {
         selecting = "a";
         firstPoint = undefined;
         secondPoint = undefined;
@@ -60,6 +59,11 @@ export default function Mapgl() {
         dispatch(clearPoints());
         if (!directions) return;
         directions.clear();
+      }
+
+      if (!resetButton) return;
+      resetButton.addEventListener("click", function () {
+        reset();
       });
 
       map.on("click", (e) => {
@@ -67,12 +71,14 @@ export default function Mapgl() {
         dispatch(setLnglat(e.lngLat));
         if (selecting != "end") {
           markers.push(
-            // @ts-ignore
+            // @ts-ignores
+
             new mapgl.Marker(map, {
               coordinates: coords,
-              icon: "https://docs.2gis.com/img/dotMarker.svg",
+              icon: "../../../src/img/dotMarker.svg",
             })
           );
+          console.log("markers :", markers);
         }
 
         if (selecting === "a") {
@@ -86,27 +92,65 @@ export default function Mapgl() {
           selecting = "end";
         }
 
-        // If all points are selected — we can draw the route
-        if (firstPoint && secondPoint && thirdPoint && directions) {
-          const notes = {
-            fPoint: firstPoint,
-            sPoint: secondPoint,
-            tPoint: thirdPoint,
-          };
-          console.log(notes);
-          dispatch(setPoints(notes));
+        if (!submitButton) return;
+        submitButton.addEventListener("click", function () {
+          if (firstPoint && secondPoint && directions && !thirdPoint) {
+            directions.carRoute({
+              points: [Object.values(firstPoint), Object.values(secondPoint)],
+            });
+            markers.forEach((m) => {
+              m.destroy();
+            });
+            const notes = {
+              fPoint: firstPoint,
+              sPoint: secondPoint,
+              tPoint: thirdPoint,
+            };
+            console.log(notes);
+            dispatch(setPoints(notes));
+          } else if (firstPoint && secondPoint && directions && thirdPoint) {
+            directions.carRoute({
+              points: [
+                Object.values(firstPoint),
+                Object.values(secondPoint),
+                Object.values(thirdPoint),
+              ],
+            });
+            markers.forEach((m) => {
+              m.destroy();
+            });
+            const notes = {
+              fPoint: firstPoint,
+              sPoint: secondPoint,
+              tPoint: thirdPoint,
+            };
+            console.log(notes);
+            dispatch(setPoints(notes));
+          }
 
-          directions.carRoute({
-            points: [
-              Object.values(firstPoint),
-              Object.values(secondPoint),
-              Object.values(thirdPoint),
-            ],
-          });
-          markers.forEach((m) => {
-            m.destroy();
-          });
-        }
+          reset();
+        });
+        // If all points are selected — we can draw the route
+        // if (firstPoint && secondPoint && thirdPoint && directions) {
+        // 	const notes = {
+        // 		fPoint: firstPoint,
+        // 		sPoint: secondPoint,
+        // 		tPoint: thirdPoint,
+        // 	};
+        // 	console.log(notes);
+        // 	dispatch(setPoints(notes));
+
+        // 	directions.carRoute({
+        // 		points: [
+        // 			Object.values(firstPoint),
+        // 			Object.values(secondPoint),
+        // 			Object.values(thirdPoint),
+        // 		],
+        // 	});
+        // 	markers.forEach((m) => {
+        // 		m.destroy();
+        // 	});
+        // }
       });
 
       // @ts-ignore
