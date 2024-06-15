@@ -2,35 +2,26 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../services";
 import "./List.css";
 import { showRoute } from "../../services/thunk/route";
+import { findRoutes } from "../../services/thunk/findRoutes";
 
 const List = () => {
-  const notes = useAppSelector((store) => store.note.notes);
-  const { isPending, routeInfo, errorMessage } = useAppSelector(
-    (store) => store.route
-  );
+  const { isPending, routes } = useAppSelector((store) => store.routeLocal);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     console.log("call useEffect");
-    if (!isPending && !routeInfo && notes) {
-      console.log("NOTES", notes);
-      dispatch(showRoute(notes));
+    if (!isPending && routes) {
+      console.log("routes", routes);
     }
-  }, [notes]);
+  });
 
   function handleClick() {
     // dispatch(saveCard()).then(() => dispatch(getUser()))
+    dispatch(findRoutes());
   }
-
-  if (!notes?.length) return <p>Выбери, блять, точки. Пожалуйста</p>;
-  if (errorMessage) return <p>{errorMessage}</p>;
-
-  return isPending ? (
-    <div className="temp">ЗагрузОчка</div>
-  ) : (
+  return (
     <div className="temp">
-      <p>{routeInfo?.[0].ui_total_duration}</p>
-      <button onClick={handleClick}>Сохранить</button>
+      <button onClick={handleClick}>показать</button>
     </div>
   );
 };
