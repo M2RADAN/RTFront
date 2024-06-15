@@ -7,13 +7,14 @@ export interface TRouteLocal {
   errorMessage?: string;
   isPending: boolean;
   message?: string;
-  routes?: IRoute;
+  routes?: IRoute[];
 }
 
 const initialState: TRouteLocal = {
   isPending: false,
 };
-interface IRoute {
+export interface IRoute {
+  _id: string;
   userId: string;
   name: string;
   points: IPoint[];

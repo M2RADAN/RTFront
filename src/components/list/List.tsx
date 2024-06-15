@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../services";
 import "./List.css";
-import { showRoute } from "../../services/thunk/route";
 import { findRoutes } from "../../services/thunk/findRoutes";
+
+import { Card } from "../../ui/card/card";
 
 const List = () => {
   const { isPending, routes } = useAppSelector((store) => store.routeLocal);
@@ -20,7 +21,14 @@ const List = () => {
     dispatch(findRoutes());
   }
   return (
-    <div className="temp">
+    <div>
+      {routes && (
+        <div className="temp">
+          {routes.map((el) => (
+            <Card card={el} key={el._id} />
+          ))}
+        </div>
+      )}
       <button onClick={handleClick}>показать</button>
     </div>
   );

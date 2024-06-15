@@ -12,7 +12,7 @@ export const showRoute = createAsyncThunk<IRouteInfo, IPoint[]>(
   "showRoute",
   async (points, api) => {
     const result = await fetch(
-      "https://routing.api.2gis.com/carrouting/6.0.0/global?key=916a51a9-06da-48fb-bba4-c9073a4876cc",
+      "https://routing.api.2gis.com/carrouting/6.0.0/global?key=e5fefe22-8131-439b-829f-c3d61be60e08",
       {
         method: "POST",
         headers: {

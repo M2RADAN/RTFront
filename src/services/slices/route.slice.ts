@@ -1,9 +1,14 @@
 import { createSlice, isPending, PayloadAction } from "@reduxjs/toolkit";
 import { IPoint } from "./note.slice";
 import { showRoute } from "../thunk/route";
+import { checkoutRoute } from "../thunk/checkoutRoute";
 
 export interface TNotesNullable {
   routeInfo?: IRouteInfo;
+  checkoutRouteInfo?: IRouteInfo;
+  checkoutPoints?: IPoint[];
+  selectedRouteId?: string;
+
   errorMessage?: string;
   isPending: boolean;
 }
@@ -80,8 +85,22 @@ export const routeSlice = createSlice({
       .addCase(showRoute.pending, (store) => {
         store.isPending = true;
       })
-      .addCase(showRoute.rejected, (store, action) => {
+      .addCase(showRoute.rejected, (store) => {
         store.isPending = false;
+      })
+      .addCase(
+        checkoutRoute.fulfilled,
+        (
+          store,
+          action: PayloadAction<[IRouteInfo, IPoint[] | undefined, string]>
+        ) => {
+          store.checkoutRouteInfo = action.payload[0];
+          store.checkoutPoints = action.payload[1] || [];
+          store.selectedRouteId = action.payload[2];
+        }
+      )
+      .addCase(checkoutRoute.pending, (store) => {
+        store.isPending = true;
       });
   },
 });

@@ -1,11 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IPoint } from "../slices/note.slice";
+import { IRoute } from "../slices/routeLocal.slice";
+import { RootState } from "..";
 
-export interface IRoute {
-  UserId: string;
-  name: string;
-  points: IPoint[];
-}
 export interface IRouteData {
   message: string;
   route: IRoute;

@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Map, Marker } from "@2gis/mapgl/types";
 import { load } from "@2gis/mapgl";
 import { RulerControl } from "@2gis/mapgl-ruler";
 import { Directions } from "@2gis/mapgl-directions";
 import { MapWrapper } from "./MapWrapper";
-import { useAppDispatch } from "../../services";
+import { useAppDispatch, useAppSelector } from "../../services";
 import {
   setPoints,
   clearPoints,
@@ -15,6 +15,19 @@ export const MAP_CENTER = [131.883506, 43.117337];
 
 export default function Mapgl() {
   const dispatch = useAppDispatch();
+  const [checkoutInfo] = useAppSelector((s) => s.route.checkoutRouteInfo) || [];
+
+  const checkoutPoints = useAppSelector((s) => s.route.checkoutPoints) || [];
+
+  const [directionsState, setDirections] = useState<Directions | null>(null);
+
+  useEffect(() => {
+    if (!checkoutInfo?.waypoints) return;
+    directionsState?.carRoute({
+      points: checkoutPoints.map((el) => Object.values(el)),
+    });
+    // Врубай
+  }, [checkoutInfo?.waypoints, directionsState]);
 
   useEffect(() => {
     let markers: Marker[] = [];
@@ -28,7 +41,7 @@ export default function Mapgl() {
       map = new mapgl.Map("map-container", {
         center: MAP_CENTER,
         zoom: 13,
-        key: "f57a3d5f-a555-432d-a29d-4b2c7d163344",
+        key: "e5fefe22-8131-439b-829f-c3d61be60e08",
       });
 
       const controlsHtml = `<button id="reset">Reset points</button> `;
@@ -91,8 +104,9 @@ export default function Mapgl() {
       const rulerControl = new RulerControl(map, { position: "centerRight" });
 
       directions = new Directions(map, {
-        directionsApiKey: "f57a3d5f-a555-432d-a29d-4b2c7d163344",
+        directionsApiKey: "e5fefe22-8131-439b-829f-c3d61be60e08",
       });
+      setDirections(directions);
     });
     // Destroy the map, if Map component is going to be unmounted
     return () => {

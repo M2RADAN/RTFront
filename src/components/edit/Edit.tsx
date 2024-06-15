@@ -34,6 +34,7 @@ const Edit = () => {
     // /me
     // data: TUserCard[]
     // set user card to redux in the same field
+    if (notes) dispatch(saveRoute({ name: name, points: notes }));
   }
 
   if (!notes?.length)
