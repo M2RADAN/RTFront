@@ -4,12 +4,16 @@ import authReducer from "./slices/auth.slice";
 import navigationReducer from "./slices/navigation.slice";
 import profileReducer from "./slices/profile.slice";
 import noteReducer from "./slices/note.slice";
+import routeReducer from "./slices/route.slice";
+import routeLocalReducer from "./slices/routeLocal.slice";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     navigation: navigationReducer,
     profile: profileReducer,
     note: noteReducer,
+    route: routeReducer,
+    routeLocal: routeLocalReducer,
   },
   devTools: true,
 });

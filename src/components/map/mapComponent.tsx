@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Map, Marker } from "@2gis/mapgl/types";
 import { load } from "@2gis/mapgl";
-import { Clusterer } from "@2gis/mapgl-clusterer";
 import { RulerControl } from "@2gis/mapgl-ruler";
 import { Directions } from "@2gis/mapgl-directions";
 import { MapWrapper } from "./MapWrapper";
@@ -9,158 +8,92 @@ import { useAppDispatch } from "../../services";
 import {
   setPoints,
   clearPoints,
-  setLnglat,
-  clearLnglat,
   IPoint,
 } from "../../services/slices/note.slice";
 
-export const MAP_CENTER = [55.31878, 25.23584];
+export const MAP_CENTER = [131.883506, 43.117337];
 
 export default function Mapgl() {
   const dispatch = useAppDispatch();
+
   useEffect(() => {
-    const markers: Marker[] = [];
-    let firstPoint: IPoint | undefined;
-    let secondPoint: IPoint | undefined;
-    let thirdPoint: IPoint | undefined;
+    let markers: Marker[] = [];
     // A current selecting point
-    let selecting = "a";
 
     let map: Map | null = null;
     let directions: Directions | null = null;
-    let clusterer: Clusterer | null = null;
+    let points: IPoint[] = [];
 
     load().then((mapgl) => {
       map = new mapgl.Map("map-container", {
         center: MAP_CENTER,
         zoom: 13,
-        key: "916a51a9-06da-48fb-bba4-c9073a4876cc",
+        key: "f57a3d5f-a555-432d-a29d-4b2c7d163344",
       });
+
       const controlsHtml = `<button id="reset">Reset points</button> `;
       const controlsHtml2 = `<button id="submit">Submit points</button> `;
       new mapgl.Control(map, controlsHtml, {
-        position: "topLeft",
+        position: "topRight",
       });
       new mapgl.Control(map, controlsHtml2, {
         position: "topRight",
       });
       const resetButton = document.getElementById("reset");
       const submitButton = document.getElementById("submit");
-
       function reset() {
-        selecting = "a";
-        firstPoint = undefined;
-        secondPoint = undefined;
-        thirdPoint = undefined;
+        points = [];
         markers.forEach((m) => {
           m.destroy();
         });
-        dispatch(clearLnglat());
-        dispatch(clearPoints());
+        markers = [];
         if (!directions) return;
         directions.clear();
       }
 
       if (!resetButton) return;
       resetButton.addEventListener("click", function () {
+        dispatch(clearPoints());
         reset();
       });
 
       map.on("click", (e) => {
+        if (location.pathname != "/edit") return;
         const coords: IPoint = { lon: e.lngLat[0], lat: e.lngLat[1] };
-        dispatch(setLnglat(e.lngLat));
-        if (selecting != "end") {
+        if (markers.length < 4) {
           markers.push(
-            // @ts-ignores
-
-            new mapgl.Marker(map, {
-              coordinates: coords,
-              icon: "../../../src/img/dotMarker.svg",
+            new mapgl.Marker(map!, {
+              coordinates: Object.values(coords),
+              icon: "https://docs.2gis.com/img/dotMarker.svg",
             })
           );
-          console.log("markers :", markers);
         }
 
-        if (selecting === "a") {
-          firstPoint = coords;
-          selecting = "b";
-        } else if (selecting === "b") {
-          secondPoint = coords;
-          selecting = "c";
-        } else if (selecting === "c") {
-          thirdPoint = coords;
-          selecting = "end";
+        if (points.length < 4) {
+          points.push(coords);
         }
 
         if (!submitButton) return;
         submitButton.addEventListener("click", function () {
-          if (firstPoint && secondPoint && directions && !thirdPoint) {
-            directions.carRoute({
-              points: [Object.values(firstPoint), Object.values(secondPoint)],
-            });
-            markers.forEach((m) => {
-              m.destroy();
-            });
-            const notes = {
-              fPoint: firstPoint,
-              sPoint: secondPoint,
-              tPoint: thirdPoint,
-            };
-            console.log(notes);
-            dispatch(setPoints(notes));
-          } else if (firstPoint && secondPoint && directions && thirdPoint) {
-            directions.carRoute({
-              points: [
-                Object.values(firstPoint),
-                Object.values(secondPoint),
-                Object.values(thirdPoint),
-              ],
-            });
-            markers.forEach((m) => {
-              m.destroy();
-            });
-            const notes = {
-              fPoint: firstPoint,
-              sPoint: secondPoint,
-              tPoint: thirdPoint,
-            };
-            console.log(notes);
-            dispatch(setPoints(notes));
-          }
+          if (points.length < 2) return;
 
-          reset();
+          directions?.carRoute({
+            points: points.map((el) => Object.values(el)),
+          });
+          markers.forEach((m) => {
+            m.destroy();
+          });
+          dispatch(setPoints(points));
         });
-        // If all points are selected — we can draw the route
-        // if (firstPoint && secondPoint && thirdPoint && directions) {
-        // 	const notes = {
-        // 		fPoint: firstPoint,
-        // 		sPoint: secondPoint,
-        // 		tPoint: thirdPoint,
-        // 	};
-        // 	console.log(notes);
-        // 	dispatch(setPoints(notes));
-
-        // 	directions.carRoute({
-        // 		points: [
-        // 			Object.values(firstPoint),
-        // 			Object.values(secondPoint),
-        // 			Object.values(thirdPoint),
-        // 		],
-        // 	});
-        // 	markers.forEach((m) => {
-        // 		m.destroy();
-        // 	});
-        // }
       });
 
       // @ts-ignore
       const rulerControl = new RulerControl(map, { position: "centerRight" });
 
       directions = new Directions(map, {
-        directionsApiKey: "916a51a9-06da-48fb-bba4-c9073a4876cc",
+        directionsApiKey: "f57a3d5f-a555-432d-a29d-4b2c7d163344",
       });
     });
-
     // Destroy the map, if Map component is going to be unmounted
     return () => {
       directions?.clear();
@@ -168,9 +101,5 @@ export default function Mapgl() {
     };
   }, []);
 
-  return (
-    <>
-      <MapWrapper />
-    </>
-  );
+  return <MapWrapper />;
 }
