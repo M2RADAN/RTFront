@@ -37,8 +37,7 @@ const Edit = () => {
     if (notes) dispatch(saveRoute({ name: name, points: notes }));
   }
 
-  if (!notes?.length && isAuth)
-    return <p>Выбери, точки. Пожалуйста {location.pathname}</p>;
+  if (!notes?.length && isAuth) return <p>Выбери, точки. Пожалуйста</p>;
   if (errorMessage) return <p>{errorMessage}</p>;
   // card preview
   return isPending && isAuth ? (
