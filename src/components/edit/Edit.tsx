@@ -6,7 +6,7 @@ import { saveRoute } from "../../services/thunk/saveRoute";
 
 const Edit = () => {
   const message = useAppSelector((store) => store.routeLocal.message);
-
+  const isAuth = useAppSelector((s) => s.profile.isAuth);
   const notes = useAppSelector((store) => store.note.notes);
   const { isPending, routeInfo, errorMessage } = useAppSelector(
     (store) => store.route
@@ -37,17 +37,19 @@ const Edit = () => {
     if (notes) dispatch(saveRoute({ name: name, points: notes }));
   }
 
-  if (!notes?.length)
-    return <p>Выбери, блять, точки. Пожалуйста {location.pathname}</p>;
+  if (!notes?.length && isAuth)
+    return <p>Выбери, точки. Пожалуйста {location.pathname}</p>;
   if (errorMessage) return <p>{errorMessage}</p>;
   // card preview
-  return isPending ? (
+  return isPending && isAuth ? (
     <div className="temp">ЗагрузОчка</div>
-  ) : (
+  ) : isAuth ? (
     <div className="temp">
       <p>{routeInfo?.[0].ui_total_duration}</p>
       <button onClick={handleClick}>Сохранить</button>
     </div>
+  ) : (
+    <div>Войдите в аккаунт</div>
   );
 };
 

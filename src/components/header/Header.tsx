@@ -24,7 +24,7 @@ const Header = () => {
   if (location.pathname != "/edit") {
     if (resetButton) resetButton.style.display = "none";
     if (submitButton) submitButton.style.display = "none";
-  } else if (location.pathname === "/edit") {
+  } else if (location.pathname === "/edit" && isAuth) {
     if (resetButton) resetButton.style.display = "revert";
     if (submitButton) submitButton.style.display = "revert";
   }

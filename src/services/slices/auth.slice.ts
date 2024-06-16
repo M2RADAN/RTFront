@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { registerUser } from "../thunk/register";
 import { loginUser } from "../thunk/login";
+import { logoutUser } from "../thunk/logut";
 
 export interface IUser {
   email: string;
@@ -44,6 +45,18 @@ export const authSlice = createSlice({
         store.isAuth = true;
       })
       .addCase(loginUser.rejected, (store, action) => {
+        store.isPending = false;
+        store.errorMessage = action.payload as string;
+      })
+      .addCase(logoutUser.pending, (store) => {
+        store.isPending = true;
+      })
+      .addCase(logoutUser.fulfilled, (store) => {
+        store.isPending = false;
+        store.isAuth = false;
+        store.user = undefined;
+      })
+      .addCase(logoutUser.rejected, (store, action) => {
         store.isPending = false;
         store.errorMessage = action.payload as string;
       });

@@ -101,7 +101,7 @@ export default function Mapgl() {
       });
 
       // @ts-ignore
-      const rulerControl = new RulerControl(map, { position: "centerRight" });
+      // const rulerControl = new RulerControl(map, { position: "centerRight" });
 
       directions = new Directions(map, {
         directionsApiKey: "e5fefe22-8131-439b-829f-c3d61be60e08",

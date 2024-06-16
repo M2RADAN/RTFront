@@ -8,7 +8,7 @@ import { Card } from "../../ui/card/card";
 const List = () => {
   const { isPending, routes } = useAppSelector((store) => store.routeLocal);
   const dispatch = useAppDispatch();
-
+  const isAuth = useAppSelector((s) => s.profile.isAuth);
   useEffect(() => {
     console.log("call useEffect");
     if (!isPending && routes) {
@@ -29,7 +29,7 @@ const List = () => {
           ))}
         </div>
       )}
-      <button onClick={handleClick}>показать</button>
+      {isAuth && <button onClick={handleClick}>показать</button>}
     </div>
   );
 };
