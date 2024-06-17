@@ -1,18 +1,17 @@
 #root {
-  max-width: 1280px;
-  width: 100%;
-  height: 100%;
+	margin: auto;
+	display: flex;
 }
 
 .card {
-  padding: 2em;
+	padding: 2em;
 }
 
 .form__outlet {
-  position: fixed;
-  top: 0px;
-  left: 40px;
-  opacity: 1;
-  z-index: 3;
-  transition: transform 0.1s ease;
+	position: fixed;
+	top: 0px;
+	left: 40px;
+	opacity: 1;
+	z-index: 3;
+	transition: transform 0.1s ease;
 }

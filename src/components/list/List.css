@@ -1,10 +1,9 @@
-.temp {
-  color: black;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 15px;
-  border: 2px solid #fff;
-  max-height: 80dvh;
-  overflow: auto;
+.list {
+	color: black;
+	display: flex;
+	flex-direction: column;
+	width: 320px;
+	gap: 10px;
+	max-height: 80dvh;
+	overflow: auto;
 }

@@ -1,10 +1,11 @@
 .info {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  background: #ffff;
-  padding: 10px;
-  border-radius: 10px;
-  color: black;
-  gap: 30px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	width: 290px;
+	background: #ffff;
+	padding: 10px;
+	border-radius: 10px;
+	color: black;
+	gap: 30px;
 }

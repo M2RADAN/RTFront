@@ -1,0 +1,10 @@
+.temp {
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 280px;
+	font-size: 1.4rem;
+	gap: 2px;
+}

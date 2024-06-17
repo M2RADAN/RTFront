@@ -1,25 +1,25 @@
 .route__card {
-  border: 2px solid black;
-  margin: 15px 10px;
-  border-radius: 8px;
-  background-color: aliceblue;
-  cursor: pointer;
-  color: black;
+	margin: 15px 10px;
+	background-color: aliceblue;
+	cursor: pointer;
+	color: black;
 }
 
 .route__card p {
-  text-align: center;
-  margin: 0;
+	text-align: center;
+	margin: 0;
+	font-size: 1.4rem;
+	background-color: #d2d2d2;
 }
 
 .route__card ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
 .route__card li {
-  padding: 10px;
-  display: flex;
-  gap: 15px;
+	padding: 10px;
+	display: flex;
+	gap: 15px;
 }

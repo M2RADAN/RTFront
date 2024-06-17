@@ -1,25 +1,30 @@
 .Header {
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 60px;
-  height: 1024px;
-  /* border: 1px solid #ffffff; */
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	width: 60px;
+	height: 100%;
+	/* border: 1px solid #ffffff; */
 }
 .Header a {
-  background-color: #fff;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: width 0.2s ease;
+	background-color: #fff;
+	width: 60px;
+	height: 60px;
+	border-radius: 0 10px 10px 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: width 0.2s ease;
+	color: black;
+	font-size: 1.2rem;
+	font-weight: bold;
+	border-bottom: 2px solid #909090;
 }
 
 a.header__link {
-  width: 300px;
-  background-color: #fff;
+	width: 386px;
+	background-color: #fff;
 }
